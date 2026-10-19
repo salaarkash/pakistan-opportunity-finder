@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pakistan Opportunity Finder — Official Scholarships, Jobs & Youth Programs</title>
+  <!-- Tailwind CSS & FontAwesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            pakGreen: { 50: '#e6f4ea', 600: '#138808', 700: '#0f6e06', 900: '#094304' }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- Top Banner / Header -->
+  <header class="bg-pakGreen-900 text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-5 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <div class="w-12 h-12 rounded-xl bg-pakGreen-600 flex items-center justify-center text-white font-bold text-2xl shadow-lg">
+          <i class="fa-solid fa-compass"></i>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold tracking-tight">Pakistan Opportunity Finder</h1>
+          <p class="text-xs text-emerald-200">Verified official government portals, scholarships & youth programs</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-2 bg-pakGreen-700 px-3 py-1.5 rounded-lg text-xs font-medium text-emerald-100">
+        <i class="fa-solid fa-shield-halved text-amber-300"></i>
+        <span>100% Official Links • Zero Fee Protection</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Anti-Scam Notice Banner -->
+  <div class="bg-amber-50 border-b border-amber-200 text-amber-900 px-4 py-3 text-xs sm:text-sm">
+    <div class="max-w-7xl mx-auto flex items-start space-x-3">
+      <i class="fa-solid fa-triangle-exclamation text-amber-600 text-base mt-0.5"></i>
+      <div>
+        <strong class="font-bold">Anti-Scam Security Notice:</strong> Official Pakistani government portals (HEC, PHEC, NAVTTC, PMYP) <strong>never</strong> charge application fees via EasyPaisa/JazzCash to private personal numbers, nor do they sell merit list placements. Always verify the domain ends in <code class="bg-amber-100 px-1 rounded font-mono">.gov.pk</code>.
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-8 sm:px-6 space-y-6">
+
+    <!-- Search and Filter Bar -->
+    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Search Input -->
+        <div class="relative md:col-span-2">
+          <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </span>
+          <input type="text" id="search-input" onkeyup="filterOpportunities()" placeholder="Search by title, keyword, or organization (e.g. HEC, Punjab, DigiSkills, Internship)..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm focus:ring-2 focus:ring-pakGreen-600 outline-none">
+        </div>
+        <!-- Category Filter -->
+        <div>
+          <select id="category-filter" onchange="filterOpportunities()" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm focus:ring-2 focus:ring-pakGreen-600 outline-none">
+            <option value="">All Categories</option>
+            <option value="Scholarships">Scholarships</option>
+            <option value="Government Jobs">Government Jobs</option>
+            <option value="Admissions">Admissions</option>
+            <option value="Youth Programmes">Youth Programmes</option>
+            <option value="Skills Training">Skills Training</option>
+          </select>
+        </div>
+      </div>
+      <!-- Quick Tags -->
+      <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 text-xs">
+        <span class="font-semibold text-slate-500">Quick Filters:</span>
+        <button onclick="setQuickFilter('')" class="px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-colors">All</button>
+        <button onclick="setQuickFilter('Scholarships')" class="px-3 py-1 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 font-medium transition-colors">Scholarships</button>
+        <button onclick="setQuickFilter('Youth Programmes')" class="px-3 py-1 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 font-medium transition-colors">Youth Programmes</button>
+        <button onclick="setQuickFilter('Skills Training')" class="px-3 py-1 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 font-medium transition-colors">Skills Training</button>
+      </div>
+    </div>
+
+    <!-- Opportunities Grid -->
+    <div id="opportunities-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Populated via JavaScript -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="empty-state" class="hidden text-center py-12 bg-white rounded-2xl border border-slate-200">
+      <div class="w-12 h-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto text-xl mb-3">
+        <i class="fa-solid fa-folder-open"></i>
+      </div>
+      <h3 class="font-bold text-slate-700 text-base">No matching opportunities found</h3>
+      <p class="text-xs text-slate-500 mt-1">Try adjusting your search keywords or category filter.</p>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <p>Pakistan Opportunity Finder • Built for verified access to official Pakistani institutional resources.</p>
+      <p class="text-[11px] text-slate-400">Always confirm official eligibility guidelines directly on government portals before submitting documents.</p>
+    </div>
+  </footer>
+
+  <!-- Application Script -->
+  <script>
+    const opportunities = [
+      {
+        id: 1,
+        title: "CM Punjab Honhaar Scholarship Program",
+        category: "Scholarships",
+        organization: "Punjab Higher Education Commission (PHEC)",
+        status: "Unverified / Awaiting New Round",
+        eligibility: "Punjab Domicile, 1st Semester/Year in approved disciplines at listed universities.",
+        deadline: "Next round dates not announced yet",
+        sourceName: "honhaarscholarship.punjabhec.gov.pk",
+        sourceUrl: "https://honhaarscholarship.punjabhec.gov.pk",
+        description: "Covers full tuition at public universities and 50% at selected federal/private universities. Free application."
+      },
+      {
+        id: 2,
+        title: "PM Youth Internship Program (Digital Youth Hub)",
+        category: "Youth Programmes",
+        organization: "Prime Minister's Youth Programme",
+        status: "Verified Open / Rolling Basis",
+        eligibility: "Age 18-29; Polytechnic Diploma, Bachelor's or Master's (final-year students eligible).",
+        deadline: "Rolling basis (Apply ASAP)",
+        sourceName: "pmyp.gov.pk / Digital Youth Hub",
+        sourceUrl: "https://pmyp.gov.pk",
+        description: "Paid corporate and government internships with monthly stipends ranging from PKR 15,000 to PKR 50,000."
+      },
+      {
+        id: 3,
+        title: "DigiSkills Training Program (Batch-04)",
+        category: "Skills Training",
+        organization: "Ministry of IT & Telecom / IGNITE",
+        status: "Verified Active / Ongoing",
+        eligibility: "Open to all Pakistani citizens seeking freelancing and digital skills training.",
+        deadline: "Batch commenced August 2026 (Check portal for upcoming batches)",
+        sourceName: "digiskills.pk",
+        sourceUrl: "https://digiskills.pk/",
+        description: "Free online training courses in AI using Python, E-Commerce Management, Freelancing, and Digital Marketing."
+      },
+      {
+        id: 4,
+        title: "HEC Undergraduate & Postgraduate Scholarships",
+        category: "Scholarships",
+        organization: "Higher Education Commission Pakistan",
+        status: "Verified Portal",
+        eligibility: "Pakistani/AJK nationals meeting specific merit and need criteria for local/foreign studies.",
+        deadline: "Varies by scholarship sub-program",
+        sourceName: "hec.gov.pk",
+        sourceUrl: "https://www.hec.gov.pk",
+        description: "Official national portal for indigenous and overseas scholarships, tuition support, and research grants."
+      },
+      {
+        id: 5,
+        title: "Federal Public Service Commission (FPSC) Jobs",
+        category: "Government Jobs",
+        organization: "FPSC Pakistan",
+        status: "Verified Portal",
+        eligibility: "BPS-16 to BPS-21 federal government positions across Pakistan per advertised quota.",
+        deadline: "Refer to individual consolidated advertisements",
+        sourceName: "fpsc.gov.pk",
+        sourceUrl: "https://www.fpsc.gov.pk",
+        description: "Official portal for Central Superior Services (CSS) and general recruitment competitive examinations and federal jobs."
+      },
+      {
+        id: 6,
+        title: "National Testing Service (NTS) & Institutional Admissions",
+        category: "Admissions",
+        organization: "NTS Pakistan & Universities",
+        status: "Verified Portal",
+        eligibility: "Intermediate / Bachelor's graduates applying for university entry tests.",
+        deadline: "Check active test schedules",
+        sourceName: "nts.org.pk",
+        sourceUrl: "https://www.nts.org.pk",
+        description: "Standardized admission test schedules, NAT/GAT registrations, and scholarship screening tests."
+      },
+      {
+        id: 7,
+        title: "NAVTTC Prime Minister's Youth Skills Development",
+        category: "Skills Training",
+        organization: "National Vocational & Technical Training Commission",
+        status: "Unverified / Periodic Batches",
+        eligibility: "Age 18-35, minimum Middle pass for demand-driven technical trades.",
+        deadline: "Announced per batch cycle",
+        sourceName: "navttc.gov.pk",
+        sourceUrl: "https://www.navttc.gov.pk",
+        description: "Free technical and vocational training across Pakistan with monthly stipends and toolkits upon completion."
+      }
+    ];
+
+    window.onload = function() {
+      renderOpportunities(opportunities);
+    };
+
+    function renderOpportunities(items) {
+      const grid = document.getElementById('opportunities-grid');
+      const emptyState = document.getElementById('empty-state');
+
+      if (items.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      grid.innerHTML = items.map(item => `
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-pakGreen-700">${escapeHtml(item.category)}</span>
+              <span class="text-[11px] font-medium px-2 py-0.5 rounded ${getStatusBadgeClass(item.status)}">${escapeHtml(item.status)}</span>
+            </div>
+            <h3 class="font-bold text-base text-slate-900 leading-snug">${escapeHtml(item.title)}</h3>
+            <p class="text-xs font-semibold text-slate-600"><i class="fa-solid fa-building-columns mr-1.5 text-slate-400"></i>${escapeHtml(item.organization)}</p>
+            <p class="text-xs text-slate-600">${escapeHtml(item.description)}</p>
+            <div class="bg-slate-50 p-3 rounded-xl text-xs space-y-1 border border-slate-100">
+              <p class="text-slate-700"><strong>Eligibility:</strong> ${escapeHtml(item.eligibility)}</p>
+              <p class="text-slate-700"><strong>Deadline:</strong> ${escapeHtml(item.deadline)}</p>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-[11px] text-slate-400 truncate max-w-[180px]" title="${escapeHtml(item.sourceName)}"><i class="fa-solid fa-link mr-1"></i>${escapeHtml(item.sourceName)}</span>
+            <a href="${item.sourceUrl}" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-pakGreen-600 hover:bg-pakGreen-700 text-white rounded-xl text-xs font-semibold shadow-sm flex items-center space-x-1.5 transition-colors">
+              <span>Official Portal</span><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function getStatusBadgeClass(status) {
+      if (status.includes('Verified Open') || status.includes('Active')) {
+        return 'bg-emerald-100 text-emerald-800';
+      } else if (status.includes('Unverified')) {
+        return 'bg-amber-100 text-amber-800';
+      }
+      return 'bg-blue-100 text-blue-800';
+    }
+
+    function filterOpportunities() {
+      const q = document.getElementById('search-input').value.toLowerCase();
+      const cat = document.getElementById('category-filter').value;
+
+      const filtered = opportunities.filter(item => {
+        const matchesQuery = !q || (
+          item.title.toLowerCase().includes(q) ||
+          item.organization.toLowerCase().includes(q) ||
+          item.description.toLowerCase().includes(q) ||
+          item.eligibility.toLowerCase().includes(q)
+        );
+        const matchesCat = !cat || item.category === cat;
+        return matchesQuery && matchesCat;
+      });
+
+      renderOpportunities(filtered);
+    }
+
+    function setQuickFilter(categoryName) {
+      document.getElementById('category-filter').value = categoryName;
+      filterOpportunities();
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+</html>
